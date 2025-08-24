@@ -13,7 +13,6 @@ using Veldrid.OpenGLBindings;
 using static Veldrid.OpenGLBindings.OpenGLNative;
 using static Veldrid.OpenGL.OpenGLUtil;
 using static Veldrid.OpenGL.EGL.EglNative;
-using NativeLibrary = NativeLibraryLoader.NativeLibrary;
 
 namespace Veldrid.OpenGL
 {
@@ -588,9 +587,9 @@ namespace Veldrid.OpenGL
             eaglLayer.Frame = uiView.frame;
             uiView.layer.addSublayer(eaglLayer.NativePtr);
 
-            var glesLibrary = new NativeLibrary("/System/Library/Frameworks/OpenGLES.framework/OpenGLES");
+            IntPtr glesLibrary = NativeLibrary.Load("/System/Library/Frameworks/OpenGLES.framework/OpenGLES");
 
-            Func<string, IntPtr> getProcAddress = name => glesLibrary.LoadFunction(name);
+            Func<string, IntPtr> getProcAddress = name => NativeLibrary.GetExport(glesLibrary, name);
 
             LoadAllFunctions(eaglContext.NativePtr, getProcAddress, true);
 
@@ -728,7 +727,7 @@ namespace Veldrid.OpenGL
                 eaglLayer.RemoveFromSuperlayer();
                 eaglLayer.Release();
                 eaglContext.Release();
-                glesLibrary.Dispose();
+                NativeLibrary.Free(glesLibrary);
             };
 
             var platformInfo = new OpenGLPlatformInfo(
