@@ -45,6 +45,11 @@ namespace Veldrid
         /// <summary>
         ///     The Texture supports automatic generation of mipmaps through <see cref="CommandList.GenerateMipmaps(Texture)" />.
         /// </summary>
-        GenerateMipmaps = 1 << 6
+        GenerateMipmaps = 1 << 6,
+
+        /// <summary>
+        /// The texture can be shared to other graphic devices (only works on D3D11 for regular 2D and non-mipmapped textures
+        /// </summary>
+        Shared = 1 << 7
     }
 }

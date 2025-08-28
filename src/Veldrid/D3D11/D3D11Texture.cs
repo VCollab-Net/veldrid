@@ -84,6 +84,11 @@ namespace Veldrid.D3D11
                 arraySize *= 6;
             }
 
+            if ((description.Usage & TextureUsage.Shared) == TextureUsage.Shared)
+            {
+                optionFlags |= ResourceOptionFlags.Shared;
+            }
+
             int roundedWidth = (int)description.Width;
             int roundedHeight = (int)description.Height;
 
@@ -100,7 +105,7 @@ namespace Veldrid.D3D11
                     Width = roundedWidth,
                     MipLevels = (int)description.MipLevels,
                     ArraySize = arraySize,
-                    Format = TypelessDxgiFormat,
+                    Format = DxgiFormat,
                     BindFlags = bindFlags,
                     CPUAccessFlags = cpuFlags,
                     Usage = resourceUsage,
@@ -117,7 +122,7 @@ namespace Veldrid.D3D11
                     Height = roundedHeight,
                     MipLevels = (int)description.MipLevels,
                     ArraySize = arraySize,
-                    Format = TypelessDxgiFormat,
+                    Format = DxgiFormat,
                     BindFlags = bindFlags,
                     CPUAccessFlags = cpuFlags,
                     Usage = resourceUsage,
@@ -136,7 +141,7 @@ namespace Veldrid.D3D11
                     Height = roundedHeight,
                     Depth = (int)description.Depth,
                     MipLevels = (int)description.MipLevels,
-                    Format = TypelessDxgiFormat,
+                    Format = DxgiFormat,
                     BindFlags = bindFlags,
                     CPUAccessFlags = cpuFlags,
                     Usage = resourceUsage,
