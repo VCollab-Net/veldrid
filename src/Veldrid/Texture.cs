@@ -67,6 +67,10 @@ namespace Veldrid
         /// </summary>
         public abstract string Name { get; set; }
 
+        public IntPtr NativePointer => this is D3D11.D3D11Texture d3D11Texture
+            ? d3D11Texture.DeviceTexture.NativePointer
+            : throw new InvalidOperationException("Can only retrieve native pointer for texture on D3D11 backend");
+
         private readonly object fullTextureViewLock = new object();
         private TextureView fullTextureView;
 
